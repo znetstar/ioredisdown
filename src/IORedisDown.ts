@@ -1,9 +1,10 @@
 import {AbstractLevelDOWN} from 'abstract-leveldown';
 import * as IORedis from "ioredis";
 import {Redis, RedisOptions as RedisOptionsObject} from "ioredis";
-import {EncodeToolsNative} from '@etomon/encode-tools';
-import {BinaryEncoding, HashAlgorithm, IDFormat, SerializationFormat} from "@etomon/encode-tools/lib/EncodeTools";
-import {EncodingOptions} from "@etomon/encode-tools/lib/EncodeToolsNative";
+import {EncodeTools as EncodeToolsNative} from '@znetstar/encode-tools';
+import {BinaryEncoding, HashAlgorithm, IDFormat, SerializationFormat} from "@znetstar/encode-tools/lib/EncodeTools";
+import {EncodingOptions} from "@znetstar/encode-tools/lib/EncodeTools";
+import { XXHash3 } from 'xxhash-addon';
 
 type ExistingRedis = { redis: Redis };
 type Callback<T> = (error: Error|null, result?: T)=>void
@@ -49,11 +50,10 @@ export class IORedisDown<K,V> extends AbstractLevelDOWN<K,V>{
   }
 
   public _serializeKey(key: K): string {
-    let { XXHash3 } = EncodeToolsNative.xxhashNative();
-    let hasher = new XXHash3(this.hashSeed);
+    let hasher = new XXHash3(Buffer.from(this.hashSeed.toString(), 'utf8'));
 
-    let buf = hasher.hash(Buffer.isBuffer(key) ? key : this.enc.serializeObject<K>(key, SerializationFormat.json));
-    return this.enc.encodeBuffer(buf).toString('utf8');
+    hasher.update(Buffer.isBuffer(key) ? key as Buffer : Buffer.from(this.enc.serializeObject<K>(key, SerializationFormat.json), 'utf8'));
+    return this.enc.encodeBuffer(hasher.digest()).toString('utf8');
   }
 
   protected async _putAsync(key: string, value: V, options: unknown): Promise<void> {

@@ -1,9 +1,14 @@
 {
-    "name": "@etomon/ioredisdown",
-    "version": "1.0.1",
+    "name": "@znetstar/ioredisdown",
+    "version": "1.3.0",
     "description": "Redis backend for level which uses ioredis as the redis client",
     "main": "lib/index.js",
     "contributors": [
+        {
+            "name": "Third Act Team",
+            "email": "zach@thirdact.digital",
+            "url": "https://thirdact.digital"
+        },
         {
             "name": "Zachary R.T. Boyd",
             "email": "zachary@zacharyboyd.nyc",
@@ -26,8 +31,6 @@
     },
     "devDependencies": {
         "@types/abstract-leveldown": "^5.0.1",
-        "@types/bluebird": "^3.5.34",
-        "@types/bluebird-global": "^3.5.12",
         "@types/ioredis": "^4.26.3",
         "@types/levelup": "^4.3.1",
         "docdash": "^1.2.0",
@@ -40,20 +43,18 @@
         "typedoc": "^0.18.0",
         "typescript": "^3.9.7"
     },
-    "homepage": "https://github.com/EtomonUSA/ioredisdown",
-    "bugs": "https://github.com/EtomonUSA/ioredisdown",
+    "homepage": "https://github.com/znetstar/ioredisdown",
+    "bugs": "https://github.com/znetstar/ioredisdown",
     "repository": {
-        "url": "https://github.com/EtomonUSA/ioredisdown",
+        "url": "https://github.com/znetstar/ioredisdown",
         "type": "git"
     },
     "license": "LGPL-3.0",
     "dependencies": {
-        "@etomon/encode-tools": "^1.1.1",
+        "@znetstar/encode-tools": "^1.6.0",
         "abstract-leveldown": "^7.0.0",
-        "bluebird": "^3.7.2",
-        "bson-ext": "^2.0.5",
         "ioredis": "^4.27.2",
-        "xxhash-addon": "^1.4.0"
+        "xxhash-addon": "^2.0.1"
     },
     "files": [
         "/lib",
